@@ -13,53 +13,7 @@ from pyhap.accessories.WebPowerOutlet import WebPowerOutlet
 from pyhap.accessory import Bridge
 from pyhap.accessory_driver import AccessoryDriver
 
-from webpower import WebPowerSwitch
-
 logging.basicConfig(level=logging.INFO)
-
-### WEB Power Stuff ##
-def set_web_power(hexstr):
-    w = WebPowerSwitch()
-    w.set_outlet_states(hexstr)
-    res = w.get_hex_states()
-    return(str(res))
-
-def set_outlet(outlet=None,state=None):
-    w = WebPowerSwitch()
-    states = w.get_outlet_states()
-
-    if outlet ==None and state==None:
-        return(jsonify(states))
-
-    if outlet != None:
-        if outlet == "set":
-            res = w.set_outlet_states(state)
-            return(jsonify(res))
-        elif outlet == "cycle":
-            res = w.cycle_outlet_states(state)
-            return(jsonify(res))
-        else:
-            try:
-                assert 1 <= int(outlet) <= 8, "outlet number not valid"
-            except:
-                abort(401)
-
-            outlet = int(outlet)
-            outlet_index = outlet-1
-
-            if state == None:
-                res = w.outlets[outlet_index]
-                return(jsonify(res))
-            else:
-                if state == "ON":
-                    state=True
-                elif state == "OFF":
-                    state=False
-                else:
-                    abort(401)
-                res = w.set_outlet(str(outlet),state)
-                return(jsonify(res))
-
 
 
 
@@ -80,7 +34,7 @@ def get_bridge():
 
 def get_accessory():
     """Call this method to get a standalone Accessory."""
-    acc = WebPowerOutlet("MyFirstOutlet")
+    acc = WebPowerOutlet("Living Room Light")
     return acc
 
 
