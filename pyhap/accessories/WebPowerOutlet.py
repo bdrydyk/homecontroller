@@ -13,15 +13,50 @@ BASE_URL = "http://admin:seebeck10@10.0.1.67/"
 STATE_STR= "<!-- state=ef lock=e6 -->"
 OUTLET = 1
 
-#bin(int('ff', base=16))[2:]
-class WebPowerSwitch(object):
-    """docstring for WebPowerSwitch"""
-    def __init__(self):
-        super(WebPowerSwitch, self).__init__()
+class WebPowerOutlet(Accessory):
+    """docstring for Outlet"""
+
+    category = Category.OUTLET
+
+    def __init__(self, display_name, outlet=None, aid=None, mac=None, pincode=None, iid_manager=None, setup_id=None):
+        super(WebPowerOutlet, self).__init__(display_name, aid=None, mac=None, pincode=None, iid_manager=None, setup_id=None)
+
         self.base_url = "http://admin:seebeck10@10.0.1.67/"
         self.outlets = [False,False,False,False,False,False,False,False]
+        self.outlet = outlet
         self.get_outlet_states()
+        print("Outlet: {}".format(self.outlet))
         print("outlet states: {}".format(self.outlets))
+
+    def __setstate__(self, state):
+        self.__dict__.update(state)
+
+    def set_outlet(self, value):
+
+        if value:
+            state=True
+            #GPIO.output(self.pin, GPIO.HIGH)
+            print("Setting High")
+        else:
+            state=False
+            # GPIO.output(self.pin, GPIO.LOW)
+            print("Setting Low")
+
+        res = self.set_outlet_state(str(self.outlet),state)
+
+    def _set_services(self):
+        super(WebPowerOutlet, self)._set_services()
+
+        outlet_service = loader.get_serv_loader().get("Outlet")
+        self.add_service(outlet_service)
+        outlet_service.get_characteristic("On").setter_callback = self.set_outlet
+        
+    def stop(self):
+        """We override this method to clean up any resources or perform final actions, as
+        this is called by the AccessoryDriver when the Accessory is being stopped (it is
+        called right after run_sentinel is set).
+        """
+        print("Stopping accessory.")
 
     def int_to_bit_list(self,h):
         states = []
@@ -41,7 +76,7 @@ class WebPowerSwitch(object):
         print("Hex state: {}".format(m.group(1)))
         return(m.group(1))
 
-    def set_outlet(self,outlet,state):
+    def set_outlet_state(self,outlet,state):
         if state == True:
             state="ON"
         elif state == False:
@@ -80,6 +115,9 @@ class WebPowerSwitch(object):
         res = self.set_outlet_states(new_state_str)
         return(res)
 
+
+        
+#bin(int('ff', base=16))[2:]
 
 ### WEB Power Stuff ##
 # def set_web_power(hexstr):
@@ -125,50 +163,3 @@ class WebPowerSwitch(object):
 
 
 
-class WebPowerOutlet(Accessory):
-    """Implementation of a mock temperature sensor accessory."""
-
-    category = Category.OUTLET  # This is for the icon in the iOS Home app.
-
-    def __init__(self, *args, **kwargs):
-        """Here, we just store a reference to the current temperature characteristic and
-        add a method that will be executed every time its value changes.
-        """
-        # If overriding this method, be sure to call the super's implementation first,
-        # because it calls _set_services and performs some other important actions.
-        super(WebPowerOutlet, self).__init__(*args, **kwargs)
-
-    def __setstate__(self, state):
-        self.__dict__.update(state)
-
-    def set_outlet(self, value):
-        w = WebPowerSwitch()
-        states = w.get_outlet_states()
-
-        if value:
-            state=True
-            #GPIO.output(self.pin, GPIO.HIGH)
-            print("Setting High")
-        else:
-            state=False
-            # GPIO.output(self.pin, GPIO.LOW)
-            print("Setting Low")
-
-            
-        res = w.set_outlet(str(OUTLET),state)
-
-
-
-    def _set_services(self):
-        super(WebPowerOutlet, self)._set_services()
-
-        outlet_service = loader.get_serv_loader().get("Outlet")
-        self.add_service(outlet_service)
-        outlet_service.get_characteristic("On").setter_callback = self.set_outlet
-        
-    def stop(self):
-        """We override this method to clean up any resources or perform final actions, as
-        this is called by the AccessoryDriver when the Accessory is being stopped (it is
-        called right after run_sentinel is set).
-        """
-        print("Stopping accessory.")

@@ -8,20 +8,26 @@ This is:
 import logging
 import signal
 
-from pyhap.accessories.TemperatureSensor import TemperatureSensor
+from pyhap.accessories.WebPowerOutlet import WebPowerOutlet
 from pyhap.accessory import Bridge
 from pyhap.accessory_driver import AccessoryDriver
 
 logging.basicConfig(level=logging.INFO)
 
 
+
 def get_bridge():
     """Call this method to get a Bridge instead of a standalone accessory."""
-    bridge = Bridge(display_name="Bridge")
-    temp_sensor = TemperatureSensor("Termometer")
-    temp_sensor2 = TemperatureSensor("Termometer2")
-    bridge.add_accessory(temp_sensor)
-    bridge.add_accessory(temp_sensor2)
+    bridge = Bridge(display_name="Drydyk Bridge")
+    outlet1 = WebPowerOutlet("Christmas Lights", 1)
+
+    bridge.add_accessory(outlet1)
+
+    outlet5 = WebPowerOutlet("Living Room Lights", 5)
+
+    bridge.add_accessory(outlet5)
+
+    #bridge.add_accessory(temp_sensor2)
 
     # Uncomment if you have RPi module and want a LED LightBulb service on pin 16.
     # from pyhap.accessories.LightBulb import LightBulb
@@ -32,11 +38,11 @@ def get_bridge():
 
 def get_accessory():
     """Call this method to get a standalone Accessory."""
-    acc = TemperatureSensor("MyTempSensor")
+    acc = WebPowerOutlet("Living Room Light")
     return acc
 
 
-acc = get_accessory()  # Change to get_bridge() if you want to run a Bridge.
+acc = get_bridge()  # Change to get_bridge() if you want to run a Bridge.
 
 # Start the accessory on port 51826
 driver = AccessoryDriver(acc, port=51826)

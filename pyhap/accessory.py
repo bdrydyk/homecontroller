@@ -116,8 +116,7 @@ class Accessory(object):
         mac = util.generate_mac()
         return cls(display_name, aid=aid, mac=mac, pincode=pincode)
 
-    def __init__(self, display_name, aid=None, mac=None, pincode=None,
-                 iid_manager=None, setup_id=None):
+    def __init__(self, display_name, aid=None, mac=None, pincode=None, iid_manager=None, setup_id=None):
         """Initialise with the given properties.
 
         :param display_name: Name to be displayed in the Home app.
