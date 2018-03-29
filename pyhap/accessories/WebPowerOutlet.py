@@ -24,7 +24,7 @@ class WebPowerOutlet(Accessory):
         self.base_url = "http://admin:seebeck10@10.0.1.67/"
         self.outlets = [False,False,False,False,False,False,False,False]
         self.outlet = outlet
-        self.get_outlet_states()
+        #self.get_outlet_states()
         print("Outlet: {}".format(self.outlet))
         print("outlet states: {}".format(self.outlets))
 
