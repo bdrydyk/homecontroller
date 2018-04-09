@@ -1,7 +1,7 @@
 # An Accessory for the BMP180 sensor.
 # This assumes the bmp180 module is in a package called sensors.
 # Assume you have a bmp module with BMP180 class with read() method.
-from pyhap.accessories import BMP085
+from Sensors import BMP085
 
 from pyhap.accessory import Accessory, Category
 import pyhap.loader as loader
