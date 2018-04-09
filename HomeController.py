@@ -12,8 +12,9 @@ from pyhap.accessories.WebPowerOutlet import WebPowerOutlet
 from pyhap.accessory import Bridge
 from pyhap.accessory_driver import AccessoryDriver
 
-logging.basicConfig(level=logging.INFO)
+from pyhap.accessories.BMP180 import BMP180
 
+logging.basicConfig(level=logging.INFO)
 
 
 def get_bridge():
@@ -27,7 +28,9 @@ def get_bridge():
 
     bridge.add_accessory(outlet5)
 
-    #bridge.add_accessory(temp_sensor2)
+
+    temp = BMP180("Temperature Sensor")
+    bridge.add_accessory(temp)
 
     # Uncomment if you have RPi module and want a LED LightBulb service on pin 16.
     # from pyhap.accessories.LightBulb import LightBulb
