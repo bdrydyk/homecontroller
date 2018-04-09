@@ -168,9 +168,9 @@ class BMP085 :
     # Read raw temp before aligning it with the calibration values
     UT = self.readRawTemp()
     X1 = ((UT - self._cal_AC6) * self._cal_AC5) >> 15
-    X2 = (self._cal_MC << 11) / (X1 + self._cal_MD)
+    X2 = (self._cal_MC << 11) // (X1 + self._cal_MD)
     B5 = X1 + X2
-    temp = ((B5 + 8) >> 4) / 10.0
+    temp = ((B5 + 8) >> 4) // 10.0
     if (self.debug):
       print("DBG: Calibrated temperature = %f C" % temp)
     return temp
