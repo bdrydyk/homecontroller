@@ -30,3 +30,5 @@ share
 # HAP-python-generated files
 accessory.pickle
 accessory.state
+
+nohup.out
