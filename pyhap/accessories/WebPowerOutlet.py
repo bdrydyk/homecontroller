@@ -16,7 +16,7 @@ OUTLET = 1
 class WebPowerOutlet(Accessory):
     """docstring for Outlet"""
 
-    category = Category.OUTLET
+    category = Category.LIGHTBULB
 
     def __init__(self, display_name, outlet=None, aid=None, mac=None, pincode=None, iid_manager=None, setup_id=None):
         super(WebPowerOutlet, self).__init__(display_name, aid=None, mac=None, pincode=None, iid_manager=None, setup_id=None)
