@@ -3,13 +3,19 @@
 [Unit]
 Description = HAP-python daemon
 # Wants = pigpiod.service  # Remove this if you don't depend on pigpiod
-After = local-fs.target network-online.target #pigpiod.service
+After = local-fs.target syslog.target network-online.target
 
 [Service]
-User = drydyk  # It's a good idea to use some unprivileged system user
+Type=simple
+User=drydyk
+# EnvironmentFile=/etc/default/homebridge
+
 # Script starting HAP-python, e.g. main.py
 # Be careful to set any paths you use, e.g. for persisting the state.
 ExecStart = /usr/bin/python3 /home/drydyk/homecontroller/HomeController.py
+Restart=on-failure
+RestartSec=10
+KillMode=process
 
 [Install]
 WantedBy = multi-user.target

@@ -192,6 +192,8 @@ This is a quick way to get `HAP-python` to run at boot on a Raspberry Pi. It is 
 to turn on "Wait for network" in `raspi-config`. If this turns to be unreliable, see
 [this](https://www.raspberrypi.org/forums/viewtopic.php?f=66&t=187225).
 
+https://www.raspberrypi.org/forums/viewtopic.php?f=66&t=187225
+
 Copy the below in `/etc/systemd/system/HAP-python.service` (needs sudo).
 ```
 [Unit]
