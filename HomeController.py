@@ -19,7 +19,7 @@ logging.basicConfig(level=logging.INFO)
 
 def get_bridge():
     """Call this method to get a Bridge instead of a standalone accessory."""
-    bridge = Bridge(display_name="Drydyk Bridge")
+    bridge = Bridge(display_name="HomeController")
     outlet1 = WebPowerOutlet("Christmas Lights", 1)
 
     bridge.add_accessory(outlet1)

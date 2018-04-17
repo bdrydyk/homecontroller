@@ -150,6 +150,7 @@ class AccessoryDriver(object):
         self.encoder = encoder or AccessoryEncoder()
         if os.path.exists(self.persist_file):
             logger.info("Loading Accessory state from `%s`", self.persist_file)
+            logger.info(os.getcwd())
             self.load()
         else:
             logger.info("Storing Accessory state in `%s`", self.persist_file)
