@@ -48,7 +48,7 @@ def get_accessory():
 acc = get_bridge()  # Change to get_bridge() if you want to run a Bridge.
 
 # Start the accessory on port 51826
-driver = AccessoryDriver(acc, port=51826)
+driver = AccessoryDriver(acc, port=51826,persist_file="/home/drydyk/accessory.state")
 # We want KeyboardInterrupts and SIGTERM (kill) to be handled by the driver itself,
 # so that it can gracefully stop the accessory, server and advertising.
 signal.signal(signal.SIGINT, driver.signal_handler)
