@@ -24,7 +24,7 @@ def get_bridge():
 
     bridge.add_accessory(outlet1)
 
-    outlet5 = WebPowerOutlet("Living Room Lights", 5)
+    outlet5 = WebPowerOutlet("Christmas Tree", 7)
 
     bridge.add_accessory(outlet5)
 
